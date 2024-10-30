@@ -1,14 +1,17 @@
 public class Item {
     String name;
     String description;
+    Boolean isConsumable;
 
     Item(String name, String description){
         this.name = name;
         this.description = description;
+        isConsumable = true;
     }
     Item(){
         name = "Generic item";
         description = "A perfectly generic item";
+        isConsumable = true;
     }
 
     /**
@@ -36,5 +39,9 @@ public class Item {
      */
     public String getDescription(){
         return description;
+    }
+    
+    public boolean getConsumable() {
+        return this.isConsumable;
     }
 }

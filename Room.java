@@ -38,14 +38,14 @@ class Room {
      * Assuming that this returns an item from the room based on item name.
      */
     public Item getItem(String itemName) {
-
+        return null;
     }
 
     /**
      * Assuming that this returns an enemy from the room based on enemy name.
      */
     public Enemy getEnemy(String enemyName) {
-
+        return enemies.get(0);
     }
 
     /**
@@ -62,5 +62,13 @@ class Room {
      */
     public void addItem(Item itemToAdd) {
 
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String lookAt(String thing) {
+        return ("looking at " + thing + ".");
     }
 }

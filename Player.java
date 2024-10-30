@@ -32,7 +32,7 @@ public class Player {
         Item item = inventory.getItem(itemName);
         if (item != null) {
             item.use(this);
-            if (item instanceof Consumable) {
+            if (item.getConsumable() == true) {
                 inventory.removeItem(item);
             }
         } else {

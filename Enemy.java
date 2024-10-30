@@ -1,10 +1,11 @@
+import java.util.ArrayList;
 public abstract class Enemy {
     protected String name;
     protected String description;
     protected int health;
     protected int maxHealth;
     protected int attackPower;
-    protected List<Item> drops;
+    protected ArrayList<Item> drops;
     protected boolean isDefeated;
 
     public Enemy(String name, String description, int health, int attackPower){
@@ -58,7 +59,7 @@ public abstract class Enemy {
         return description;
     }
 
-    public List<Item> getDrops() {
+    public ArrayList<Item> getDrops() {
         return drops;
     }
 }

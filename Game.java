@@ -62,7 +62,7 @@ public class Game {
 
     public void restartGame() {
         // Logic to restart the game
-        initializeGame();
+        initializeGame(player.getName());
         startGame();
     }
 
