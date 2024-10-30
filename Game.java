@@ -2,6 +2,7 @@ import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
 
+
 public class Game {
     public Player player;
     public List<Room> rooms;
@@ -12,10 +13,13 @@ public class Game {
         rooms = new ArrayList<>();
         currentRoomIndex = 0;
         isGameOver = false;
-        initializeGame();
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Please input a name.");
+        String name = sc.next();
+        initializeGame(name);
     }
 
-    public void initializeGame() {
+    public void initializeGame(String name) {
         // Initialize rooms, player, and other game elements
         player = new Player(name);
         createRooms();
