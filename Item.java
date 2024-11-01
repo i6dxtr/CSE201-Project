@@ -16,7 +16,7 @@ public class Item {
 
     /**
      * Use method for Item class
-     * Player will probably be directly 
+     * Player will probably be directly
      * effected by item so nothing will be
      * returned
      * @param player : The player object that uses the item
@@ -40,7 +40,7 @@ public class Item {
     public String getDescription(){
         return description;
     }
-    
+
     public boolean getConsumable() {
         return this.isConsumable;
     }

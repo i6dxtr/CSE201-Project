@@ -12,7 +12,7 @@ public class Weapon extends Item {
 
     // dont call this
     Weapon(){
-        super("The Default Constructor Deconstructor", 
+        super("The Default Constructor Deconstructor",
         "Instantly Deconstructs anything");
         damage = Integer.MAX_VALUE;
     }

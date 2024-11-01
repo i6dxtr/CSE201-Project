@@ -6,7 +6,7 @@ public class Inventory {
     Inventory(){
         items = new ArrayList<Item>();
     }
-    
+
     public void addItem(Item item){
         items.add(item);
     }
@@ -20,7 +20,7 @@ public class Inventory {
         for(int i = 0; i < items.size(); i++){
             if(items.get(i) == item){
                 return items.remove(i);
-                
+
             }
         }
         return null;
@@ -31,10 +31,10 @@ public class Inventory {
      * based on its name (if there are multiple
      * items of the same name, it will get the
      * lower indexed item)
-     * 
+     *
      * (note: may exchange arraylist for map if
      * we are only accessing by name)
-     * 
+     *
      * @param itemName : the name of the item to get
      * @return the item from the inventory (or null)
      */
@@ -42,7 +42,7 @@ public class Inventory {
         for(int i = 0; i < items.size(); i++){
             if(items.get(i).name.equals(itemName)){
                 return items.get(i);
-                
+
             }
         }
         return null;
