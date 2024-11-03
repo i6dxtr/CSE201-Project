@@ -8,18 +8,18 @@
 * Purpose: – Class to store enemy Information and methods
 */
 public abstract class Enemy {
-    protected String name;
-    protected String description;
-    protected int health;
-    protected int maxHealth;
-    protected int attackPower;
+    protected String name; // Enemy's name
+    protected String description; // Discription of the enemy
+    protected int health; // Current health of the enemy
+    protected int maxHealth; // Max health
+    protected int attackPower; // How much damage the enemy does per hit
 
     /**
      * Enemy contrstuctor
      * @param name : name of the enemy
      * @param description : description of the enemy
      * @param health : health of the enemy
-     * @param attackPower : health of the enemy
+     * @param attackPower : how much damage the enemy does per hit
      */
     public Enemy(String name, String description, int health, int attackPower){
         this.name = name;

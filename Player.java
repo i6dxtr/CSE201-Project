@@ -4,13 +4,13 @@
  */
 
 public class Player {
-    private String name;
-    private int maxHealth;
-    private int health;
-    private Inventory inventory;
-    private Weapon equippedWeapon;
-    private Room currentRoom;
-    private boolean isDefending;
+    private String name; // Users inputted name
+    private int maxHealth; // Max health of player, what they can heal to
+    private int health; // Current health of player
+    private Inventory inventory; // Player's inventory
+    private Weapon equippedWeapon; // Player's currently equipped weapon
+    private Room currentRoom; // The room the player is in
+    private boolean isDefending; // Is the player defending?
 
     /**
      * Creates a new Player with the specified name.
