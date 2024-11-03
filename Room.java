@@ -31,7 +31,9 @@ class Room {
      * Assuming that this just diplays the info of the class so it doesn't return a value.
      */
     public void displayInfo() {
-
+        // temporary
+        System.out.println("Name: " + name);
+        System.out.println("Description: " + description);
     }
 
     /**
@@ -64,8 +66,20 @@ class Room {
 
     }
 
+    public void setName(String name){
+        this.name = name;
+    }
+
     public String getName() {
         return this.name;
+    }
+
+    public void setDescription(String description){
+        this.description = description;
+    }
+
+    public String getDescription(){
+        return description;
     }
 
     public String lookAt(String thing) {
