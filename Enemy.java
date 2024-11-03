@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+/**
+ * This abstract class is for the enemy
+ */
 public abstract class Enemy {
     protected String name;
     protected String description;
