@@ -41,7 +41,11 @@ public class Item {
         return description;
     }
 
-    public boolean getConsumable() {
+    /**
+     * Method to check if item is consumable
+     * @return true if consumable
+     */
+    public boolean isConsumable() {
         return this.isConsumable;
     }
 }
