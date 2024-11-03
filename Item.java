@@ -1,51 +1,29 @@
 public class Item {
-    String name;
-    String description;
-    Boolean isConsumable;
+    protected String name;
+    protected String description;
+    protected boolean isConsumable;
 
-    Item(String name, String description){
+    public Item(String name, String description){
         this.name = name;
         this.description = description;
-        isConsumable = true;
+        this.isConsumable = true;
     }
-    Item(){
+
+    public Item(){
         name = "Generic item";
         description = "A perfectly generic item";
         isConsumable = true;
     }
 
-    /**
-     * Use method for Item class
-     * Player will probably be directly
-     * effected by item so nothing will be
-     * returned
-     * @param player : The player object that uses the item
-     */
     public void use(Player player){
-
+        // Empty implementation
     }
 
-    /**
-     *  Method to get item's name
-     * @return name of item
-     */
     public String getName(){
         return name;
     }
 
-    /**
-     *  Method to get items description
-     * @return description of item
-     */
-    public String getDescription(){
-        return description;
-    }
-
-    /**
-     * Method to check if item is consumable
-     * @return true if consumable
-     */
     public boolean isConsumable() {
-        return this.isConsumable;
+        return isConsumable;
     }
 }
