@@ -1,44 +1,43 @@
 import java.util.Scanner;
-import java.util.List;
-import java.util.ArrayList;
-
+import java.util.Map;
+import java.util.HashMap;
 
 public class Game {
-    public Player player;
-    public List<Room> rooms;
-    public int currentRoomIndex;
-    public boolean isGameOver;
+    private Player player;
+    private Map<String, Room> rooms; // Changed from List to Map for easier access
+    private boolean isGameOver;
 
-
-    
     public Game() {
-        rooms = new ArrayList<>();
-        currentRoomIndex = 0;
+        rooms = new HashMap<>();
         isGameOver = false;
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Please input a name.");
-        String name = sc.next();
-        initializeGame(name);
     }
 
-    /**
-     * Method to initialize game
-     * @param name : the name of the player
-     * 
-     */
     public void initializeGame(String name) {
-        // Initialize rooms, player, and other game elements
+        // Initialize player and rooms
         player = new Player(name);
         createRooms();
-        player.setCurrentRoom(rooms.get(currentRoomIndex));
+        player.setCurrentRoom(rooms.get("Enchanted Library"));
     }
 
     public void createRooms() {
-        // Create and set up rooms according to the game requirements
-        rooms.add(RoomFactory.createEnchantedLibrary());
-        rooms.add(RoomFactory.createOrcBarracks());
-        rooms.add(RoomFactory.createWizardsLaboratory());
-        rooms.add(RoomFactory.createThroneRoom());
+        Room enchantedLibrary = RoomFactory.createEnchantedLibrary();
+        Room orcBarracks = RoomFactory.createOrcBarracks();
+        Room wizardsLaboratory = RoomFactory.createWizardsLaboratory();
+        Room throneRoom = RoomFactory.createThroneRoom();
+
+        // Connect rooms
+        enchantedLibrary.addExit("north", orcBarracks);
+        orcBarracks.addExit("south", enchantedLibrary);
+        orcBarracks.addExit("east", wizardsLaboratory);
+        wizardsLaboratory.addExit("west", orcBarracks);
+        wizardsLaboratory.addExit("north", throneRoom);
+        throneRoom.addExit("south", wizardsLaboratory);
+
+        // Add rooms to the map
+        rooms.put("Enchanted Library", enchantedLibrary);
+        rooms.put("Orc Barracks", orcBarracks);
+        rooms.put("Wizard's Laboratory", wizardsLaboratory);
+        rooms.put("Throne Room", throneRoom);
     }
 
     public void startGame() {
@@ -46,11 +45,7 @@ public class Game {
         player.displayHealth();
         while (!isGameOver) {
             Room currentRoom = player.getCurrentRoom();
-            currentRoom.enter(player);
-            if (isGameOver) {
-                break;
-            }
-            // Process player commands
+            currentRoom.displayInfo();
             processPlayerInput();
         }
     }
@@ -58,19 +53,21 @@ public class Game {
     private void processPlayerInput() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("> ");
-        String input = scanner.nextLine();
-        Command command = CommandFactory.getCommand(input, player);
-        if (command != null) {
-            command.execute(input.split(" "));
+        String input = scanner.nextLine().toLowerCase();
+        String[] words = input.split(" ");
+        if (words[0].equals("go") && words.length > 1) {
+            String direction = words[1];
+            Room nextRoom = player.getCurrentRoom().getExit(direction);
+            if (nextRoom != null) {
+                player.moveTo(nextRoom);
+            } else {
+                System.out.println("You can't go that way!");
+            }
+        } else if (input.equals("quit") || input.equals("exit")) {
+            exitGame();
         } else {
             System.out.println("I don't understand that command.");
         }
-    }
-
-    public void restartGame() {
-        // Logic to restart the game
-        initializeGame(player.getName());
-        startGame();
     }
 
     public void exitGame() {
@@ -78,20 +75,4 @@ public class Game {
         isGameOver = true;
         System.exit(0);
     }
-
-    public void gameOver() {
-        System.out.println("Game Over!");
-        isGameOver = true;
-        // Offer to restart or exit
-        System.out.println("Would you like to restart? (yes/no)");
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-        if (input.equalsIgnoreCase("yes")) {
-            restartGame();
-        } else {
-            exitGame();
-        }
-    }
-
-
 }
