@@ -9,6 +9,8 @@ public class Game {
     public int currentRoomIndex;
     public boolean isGameOver;
 
+
+    
     public Game() {
         rooms = new ArrayList<>();
         currentRoomIndex = 0;
@@ -19,6 +21,11 @@ public class Game {
         initializeGame(name);
     }
 
+    /**
+     * Method to initialize game
+     * @param name : the name of the player
+     * 
+     */
     public void initializeGame(String name) {
         // Initialize rooms, player, and other game elements
         player = new Player(name);
