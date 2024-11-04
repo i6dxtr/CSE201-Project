@@ -68,4 +68,4 @@ The game allows players to explore a series of four themed rooms:
 Iteration 1 Complete - Core gameplay mechanics largely implemented, including room navigation and inventory management.
 
 ## Makefile instructions for submission
-Program can be run from the directory containing all source files using the makefile. Use 'make' target to compile, 'make run' to run the program, and 'make clean' to remove all executable files.
+Program can be run from the directory containing all source files using an IDE or the makefile (Use 'make' target to compile, 'make run' to run the program, and 'make clean' to remove all executable files).
