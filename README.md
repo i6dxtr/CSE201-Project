@@ -12,10 +12,10 @@ The game allows players to explore a series of four themed rooms:
 
 ## Features
 
-- **Health System**: 
+- **Health System**:
 - **Inventory Management**:
-- **Combat System**: 
-- **Item System**: 
+- **Combat System**:
+- **Item System**:
 
 ## Getting Started
 
@@ -37,7 +37,7 @@ The game allows players to explore a series of four themed rooms:
 - `attack` - Deal damage to enemy
 - `defend` - Block the next enemy attack
 - `item` - Access inventory during combat
-- `flee` - Attempt to escape 
+- `flee` - Attempt to escape
 
 ### Game Flow
 1. Start in the Enchanted Library with basic equipment
@@ -66,3 +66,6 @@ The game allows players to explore a series of four themed rooms:
 
 ## Project Status
 Iteration 1 Complete - Core gameplay mechanics largely implemented, including room navigation and inventory management.
+
+## Makefile instructions for submission
+Program can be run from the directory containing all source files using the makefile. Use 'make' target to compile, 'make run' to run the program, and 'make clean' to remove all executable files.
