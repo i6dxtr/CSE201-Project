@@ -8,7 +8,7 @@
  * @author Joshua Rosenblatt
  * @version 1.0
  * Course: CSE 201 Fall 2024
- * Written: November 3, 2024
+ * Written: November 1, 2024
  */
 public class Potion extends Item {
 
