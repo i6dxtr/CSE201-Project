@@ -1,59 +1,57 @@
-/**
- * Class: Potion
- * Represents a potion item that can be used by a player to heal or cause damage,
- * with a certain chance of success. Potions can only be used once.
- *
- * Extends the Item class.
- *
- * @author Joshua Rosenblatt
- * @version 1.0
- * Course: CSE 201 Fall 2024
- * Written: November 1, 2024
- */
 public class Potion extends Item {
+    private int healAmount;
+    private int damageAmount;
+    private double chance;
+    private boolean isConsumed;
+    private boolean isSuspicious;
 
-    int healAmount;       // Amount of healing the potion provides
-    int damageAmount;     // Amount of damage the potion causes
-    double chance;        // Chance of the potion working
-    boolean isConsumed;   // Indicates if the potion has been used
-
-    /**
-     * Constructs a Potion with specified attributes.
-     *
-     * @param name        The name of the potion.
-     * @param description A description of the potion.
-     * @param healAmount  The amount of healing the potion provides.
-     * @param damageAmount The amount of damage the potion causes.
-     * @param chance      The chance that the potion will be effective.
-     */
-    Potion(String name, String description, int healAmount, int damageAmount, double chance) {
+    public Potion(String name, String description, int healAmount, int damageAmount, double chance) {
         super(name, description);
         this.healAmount = healAmount;
         this.damageAmount = damageAmount;
         this.chance = chance;
         isConsumed = false;
+        isSuspicious = false;
     }
 
-    /**
-     * Constructs a default Potion with preset attributes.
-     */
-    Potion() {
-        super("Red Potion", "Only for those who are worthy");
-        healAmount = Integer.MIN_VALUE;
-        damageAmount = 0;
-        chance = 1.0;
-        isConsumed = false;
+    public void setSuspicious(boolean suspicious) {
+        isSuspicious = suspicious;
     }
 
-    /**
-     * Uses the potion on a player, applying its effects if it has not been consumed.
-     *
-     * @param player The player who uses the potion.
-     */
+    @Override
     public void use(Player player) {
-        if (!isConsumed) {
-            // Apply effects to player, healing or damage, based on potion attributes
+        if (isSuspicious) {
+            System.out.println("You drink the suspicious potion...");
+            if (Math.random() < 0.5) {
+                int heal = (int) (player.getMaxHealth() * 0.2);
+                player.heal(heal);
+                System.out.println("You feel rejuvenated! You gain " + heal + " health.");
+            } else {
+                int damage = (int) (player.getMaxHealth() * 0.1);
+                player.takeDamage(damage);
+                System.out.println("Oh no! The potion was poisoned! You lose " + damage + " health.");
+            }
             isConsumed = true;
+            return;
+        }
+
+        // Original potion behavior
+        if (!isConsumed) {
+            if (Math.random() <= chance) {
+                if (healAmount > 0) {
+                    player.heal(healAmount);
+                    System.out.println("You used " + name + " and healed for " + healAmount + " health.");
+                }
+                if (damageAmount > 0) {
+                    player.takeDamage(damageAmount);
+                    System.out.println("You used " + name + " and took " + damageAmount + " damage.");
+                }
+            } else {
+                System.out.println("The " + name + " had no effect.");
+            }
+            isConsumed = true;
+        } else {
+            System.out.println("The " + name + " has already been consumed.");
         }
     }
 }

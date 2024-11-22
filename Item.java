@@ -1,25 +1,12 @@
-
-
-
-
-/**
-* Class: Item
-* @author Brandon Duecaster
-* @version 1.0
-* Course : CSE 201 Fall 2024
-* Written: October 29, 2024
-*
-* Purpose: – Class to store information about items for player to use
-*/
 public class Item {
     protected String name;
     protected String description;
     protected boolean isConsumable;
 
     /**
-     * constructor for item
-     * @param name : Name of item
-     * @param description : description of item
+     * Constructor for item.
+     * @param name        Name of the item.
+     * @param description Description of the item.
      */
     public Item(String name, String description){
         this.name = name;
@@ -28,7 +15,7 @@ public class Item {
     }
 
     /**
-     * default constructor for item
+     * Default constructor for item.
      */
     public Item(){
         name = "Generic item";
@@ -37,23 +24,30 @@ public class Item {
     }
 
     /**
-     * Method for player to use the item
-     * @param player : that will use the item
+     * Method for player to use the item.
+     * @param player The player that will use the item.
      */
     public void use(Player player){
         // Empty implementation (used for child classes)
     }
 
-    /** 
-     * Method to get item's name
+    /**
+     * Method to get item's name.
      */
     public String getName(){
         return name;
     }
 
     /**
-     * method to check if item is consumable
-     * @return true if the item is consumable
+     * Method to get item's description.
+     */
+    public String getDescription(){
+        return description;
+    }
+
+    /**
+     * Method to check if item is consumable.
+     * @return true if the item is consumable.
      */
     public boolean isConsumable() {
         return isConsumable;

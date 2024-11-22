@@ -1,12 +1,3 @@
-/**
- * Class: Requirement
- * @author Thomas England
- * @version 1.0
- * Course : CSE 201 Fall 2024
- * Written: October 28th, 2024
- *
- * Purpose: This class creates requirements that the user must meet before entering a room.
- */
 public class Requirement {
     // String to store requirement description
     private String description;

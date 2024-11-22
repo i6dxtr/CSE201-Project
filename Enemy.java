@@ -1,21 +1,16 @@
-/**
-* Class: Enemy
-* @author Josh
-* @version 1.0
-* Course : CSE 201 Fall 2024
-* Written: October 30, 2024
-*
-* Purpose: – Class to store enemy Information and methods
-*/
+import java.util.List;
+import java.util.ArrayList;
+
 public abstract class Enemy {
     protected String name; // Enemy's name
-    protected String description; // Discription of the enemy
+    protected String description; // Description of the enemy
     protected int health; // Current health of the enemy
     protected int maxHealth; // Max health
     protected int attackPower; // How much damage the enemy does per hit
+    protected List<Item> drops; // Items the enemy will drop upon defeat
 
     /**
-     * Enemy contrstuctor
+     * Enemy constructor
      * @param name : name of the enemy
      * @param description : description of the enemy
      * @param health : health of the enemy
@@ -27,6 +22,7 @@ public abstract class Enemy {
         this.maxHealth = health;
         this.health = health;
         this.attackPower = attackPower;
+        this.drops = new ArrayList<>();
     }
 
     /**
@@ -38,18 +34,90 @@ public abstract class Enemy {
     }
 
     /**
+     * Method to get the description of the enemy
+     * @return description of the enemy
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
      * Method to get the flee chance of the enemy
-     * @return the enemys flee chance
+     * @return the enemy's flee chance
      */
     public double getFleeChance() {
         return 0.5; // Or some default implementation
     }
 
     /**
-     * Method to get the enemies action (what they decide to do)
+     * Method to get the enemy's intended action (what they decide to do)
      * @return a string with the action the enemy is preparing
      */
     public String getIntendedAction() {
-        return "Enemy is preparing an attack.";
+        return name + " is preparing an attack.";
+    }
+
+    /**
+     * Enemy attacks the player
+     * @param player The player to attack
+     */
+    public void attack(Player player) {
+        if (player.isDefending()) {
+            System.out.println(name + "'s attack is completely blocked!");
+            player.setDefending(false); // Reset defending status
+            return;
+        }
+        int damage = attackPower;
+        player.takeDamage(damage);
+        System.out.println(name + " attacks you for " + damage + " damage.");
+    }
+
+    /**
+     * Reduces enemy's health by the specified damage
+     * @param damage The damage to deal to the enemy
+     */
+    public void takeDamage(int damage) {
+        health -= damage;
+        if (health < 0) health = 0;
+        System.out.println(name + " takes " + damage + " damage.");
+    }
+
+    /**
+     * Checks if the enemy is defeated
+     * @return true if enemy's health is 0 or less
+     */
+    public boolean isDefeated() {
+        return health <= 0;
+    }
+
+    /**
+     * Displays the enemy's health status
+     */
+    public void displayHealth() {
+        System.out.println(name + " Health: " + health + "/" + maxHealth);
+    }
+
+    /**
+     * Gets the current health of the enemy
+     * @return current health
+     */
+    public int getHealth() {
+        return health;
+    }
+
+    /**
+     * Adds an item to the enemy's drop list.
+     * @param item The item to add.
+     */
+    public void addDrop(Item item) {
+        drops.add(item);
+    }
+
+    /**
+     * Returns the list of items the enemy will drop upon defeat.
+     * @return List of items.
+     */
+    public List<Item> getDrops() {
+        return drops;
     }
 }

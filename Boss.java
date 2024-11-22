@@ -4,15 +4,16 @@ public class Boss extends Enemy {
      * Boss Constructor
      * @param name name of boss
      * @param description boss description
-     * @param health boss maxhealth
+     * @param health boss max health
      * @param attackPower boss attack
      */
     public Boss(String name, String description, int health, int attackPower) {
         super(name, description, health, attackPower);
+        // Add drops if any
     }
 
     /**
-     * Returns the flee chance of the player, which wil always be 0.
+     * Returns the flee chance of the player, which will always be 0.
      */
     @Override
     public double getFleeChance() {
