@@ -5,12 +5,14 @@ public class Combat {
     private Enemy enemy;
     private boolean isCombatOver;
     private Scanner scanner;
+    private Inventory inventory;
 
-    public Combat(Player player, Enemy enemy, Scanner scanner) {
+    public Combat(Player player, Enemy enemy, Scanner scanner, Inventory inventory) {
         this.player = player;
         this.enemy = enemy;
         this.isCombatOver = false;
         this.scanner = scanner;
+        this.inventory = inventory;
     }
 
     public void startCombat() {
@@ -31,15 +33,13 @@ public class Combat {
                 case "defend":
                     player.defend();
                     break;
-                case "item":
+                case "item": // Does not work if inventory is null.
                     useItem();
                     break;
                 case "flee":
-                    if (player.flee(enemy)) {
-                        isCombatOver = true;
-                        return;
-                    }
-                    break;
+                    System.out.println("Fleeing from " + enemy.getName() + ".");
+                    isCombatOver = true;
+                    return;
                 default:
                     System.out.println("Invalid action. Please choose Attack, Defend, Item, or Flee.");
                     continue;
@@ -69,7 +69,7 @@ public class Combat {
     }
 
     private void useItem() {
-        player.getInventory().displayItems();
+        inventory.displayItems();
         System.out.println("Type the name of the item to use, or type 'back' to cancel.");
         System.out.print("> ");
         String input = scanner.nextLine();
@@ -78,11 +78,11 @@ public class Combat {
             return;
         }
 
-        Item item = player.getInventory().getItem(input);
+        Item item = inventory.getItem(input);
         if (item != null) {
             item.use(player);
             if (item.isConsumable()) {
-                player.getInventory().removeItem(item);
+                inventory.removeItem(item);
             }
         } else {
             System.out.println("You don't have that item.");

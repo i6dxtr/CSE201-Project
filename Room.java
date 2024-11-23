@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.function.Consumer;
 
 public class Room {
     private String name;
@@ -8,6 +7,8 @@ public class Room {
     private List<Item> items;
     private Map<String, Interactable> interactables;
     private List<Enemy> enemies;
+    private Room nextRoom;
+    private Room prevRoom;
 
     public Room() {
         exits = new HashMap<>();
@@ -16,44 +17,127 @@ public class Room {
         enemies = new ArrayList<>();
     }
 
-    // Existing methods (getName, setName, getDescription, setDescription, addExit, getExit, etc.)
-
     /**
-     * Adds an interactable object to the room.
-     *
-     * @param name The name of the interactable.
-     * @param interactable The interactable object.
+     * method to set the next room
+     * @param nextRoom : the room that comes after the current room
      */
-    public void addInteractable(String name, Interactable interactable) {
-        interactables.put(name.toLowerCase(), interactable);
+    public void setNextRoom(Room nextRoom) {
+        this.nextRoom = nextRoom;
     }
 
     /**
-     * Retrieves an interactable by name.
-     *
-     * @param name The name of the interactable.
-     * @return The interactable object.
+     * method to set the previous room
+     * @param prevRoom : the room that comes before the current room
      */
-    public Interactable getInteractable(String name) {
-        return interactables.get(name.toLowerCase());
+    public void setPrevRoom(Room prevRoom) {
+        this.prevRoom = prevRoom;
     }
 
     /**
-     * Adds an item to the room.
+     * method to get the name of the player
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * method to set the name of a room
+     * @param name : name to set the room to
+     */
+    public void setName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Room name cannot be null or empty.");
+        }
+        this.name = name;
+    }
+
+    /**
+     * method to get the description of a room
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * method to set the description of the room
      *
-     * @param item The item to add.
+     * @param description : the description of the room to be set to
+     */
+    public void setDescription(String description) {
+        if (description == null || description.trim().isEmpty()) {
+            throw new IllegalArgumentException("Description cannot be null or empty.");
+        }
+        this.description = description;
+    }
+
+    /**
+     * method to get the next room
+     */
+    public Room getNextRoom() {
+        return nextRoom;
+    }
+
+    /**
+     * Method to get the previous room
+     */
+    public Room getPrevRoom() {
+        return prevRoom;
+    }
+
+    /**
+     * method to add an exit to a room
+     *
+     * @param direction : the direction of an exit
+     * @param room : the room which the exit will take the player
+     */
+    public void addExit(String direction, Room room) {
+        if (direction == null || direction.trim().isEmpty() || room == null) {
+            throw new IllegalArgumentException("Direction and room cannot be null or empty.");
+        }
+        exits.put(direction.toLowerCase(), room);
+    }
+
+    /**
+     * Method to get the next room via exit direction
+     * @param direction : the direction that the exit is
+     */
+    public Room getExit(String direction) {
+        return exits.get(direction.toLowerCase());
+    }
+
+    /**
+     * method to remove an exit from the room
+     *
+     * @param direction : the direction of the exit to remove
+     */
+    public void removeExit(String direction) {
+        exits.remove(direction.toLowerCase());
+    }
+
+    /**
+     * method to get a set of the exits of a room
+     */
+    public Set<String> listExits() {
+        return exits.keySet();
+    }
+
+    /**
+     * method to add an item to the room
+     * @param item : the item to add
      */
     public void addItem(Item item) {
+        if (item == null) {
+            throw new IllegalArgumentException("Item cannot be null.");
+        }
         items.add(item);
     }
 
     /**
-     * Retrieves an item by name from the room.
-     *
-     * @param itemName The name of the item.
-     * @return The item if found, null otherwise.
+     * Method to get an item from the room
+     * @param itemName : the name of the item to get
      */
     public Item getItem(String itemName) {
+        if (itemName == null || itemName.trim().isEmpty()) return null;
         for (Item item : items) {
             if (item.getName().equalsIgnoreCase(itemName)) {
                 return item;
@@ -63,26 +147,105 @@ public class Room {
     }
 
     /**
-     * Removes an item from the room.
-     *
-     * @param item The item to remove.
+     * method to remove item from the room
+     * @param item : a pointer to the item to remove
      */
     public void removeItem(Item item) {
         items.remove(item);
     }
 
-    // Other methods like displayInfo, enter, etc., remain the same.
+    /**
+     * Method to get a list of the rooms items
+     */
+    public List<Item> listItems() {
+        return new ArrayList<>(items);
+    }
 
     /**
-     * Allows the player to look at an object or area.
+     * method to add an interactable to the room
      *
-     * @param target The object or area to look at.
+     * @param name : the name of the interactable (map key)
+     * @param interactable : the interactable to add (map value)
+     */
+    public void addInteractable(String name, Interactable interactable) {
+        if (name == null || name.trim().isEmpty() || interactable == null) {
+            throw new IllegalArgumentException("Name and interactable cannot be null or empty.");
+        }
+        interactables.put(name.toLowerCase(), interactable);
+    }
+
+    /**
+     * Method to get an interactable by its name
+     * @param name : name of the interactable to get
+     */
+    public Interactable getInteractable(String name) {
+        if (name == null || name.trim().isEmpty()) return null;
+        return interactables.get(name.toLowerCase());
+    }
+
+    /**
+     * Method to get the names of all the rooms interactables
+     */
+    public Set<String> listInteractables() {
+        return interactables.keySet();
+    }
+
+    /**
+     * Method to add an enemy to the rooms enemy list
+     * @param enemy : the enemy to add
+     */
+    public void addEnemy(Enemy enemy) {
+        if (enemy == null) {
+            throw new IllegalArgumentException("Enemy cannot be null.");
+        }
+        enemies.add(enemy);
+    }
+
+    /**
+     * Method to get an enemy by name from the list of enemies
+     * @param enemyName : the name of the enemy to get from the list
+     */
+    public Enemy getEnemy(String enemyName) {
+        if (enemyName == null || enemyName.trim().isEmpty()) return null;
+        for (Enemy enemy : enemies) {
+            if (enemy.getName().equalsIgnoreCase(enemyName)) {
+                return enemy;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Method to remove an enemy from a room
+     * @param enemy : a pointer to the enemy to remove
+     */
+    public void removeEnemy(Enemy enemy) {
+        enemies.remove(enemy);
+    }
+
+    /**
+     * method to get a list of the enemies within the room
+     */
+    public List<Enemy> listEnemies() {
+        return new ArrayList<>(enemies);
+    }
+
+    /**
+     * method for a player to look at an object (items, interactables, enemies, etc)
+     * within a room
+     *
+     * @param target : the name of the object for a player to look at
      */
     public void lookAt(String target) {
+        if (target == null || target.trim().isEmpty()) {
+            System.out.println("There's nothing specific to look at.");
+            return;
+        }
+
         // Check interactables
         Interactable interactable = interactables.get(target.toLowerCase());
         if (interactable != null) {
-            System.out.println("You see " + target + ".");
+            System.out.println("You see " + interactable.getDescription() + ".");
             return;
         }
 
@@ -97,7 +260,7 @@ public class Room {
         // Check enemies
         for (Enemy enemy : enemies) {
             if (enemy.getName().equalsIgnoreCase(target)) {
-                System.out.println(enemy.getDescription());
+                System.out.println("You see " + enemy.getName() + ": " + enemy.getDescription());
                 return;
             }
         }
@@ -106,35 +269,22 @@ public class Room {
     }
 
     /**
-     * Adds an enemy to the room.
-     *
-     * @param enemy The enemy to add.
+     * Method to display the info of a room
      */
-    public void addEnemy(Enemy enemy) {
-        enemies.add(enemy);
+    public void displayInfo() {
+        System.out.println("Room: " + (name != null ? name : "Unnamed Room"));
+        System.out.println("Description: " + (description != null ? description : "No description provided."));
+        System.out.println("Exits: " + (exits.isEmpty() ? "None" : String.join(", ", exits.keySet())));
+        System.out.println("Items: " + (items.isEmpty() ? "None" : String.join(", ", items.stream().map(Item::getName).toList())));
+        System.out.println("Interactables: " + (interactables.isEmpty() ? "None" : String.join(", ", interactables.keySet())));
+        System.out.println("Enemies: " + (enemies.isEmpty() ? "None" : String.join(", ", enemies.stream().map(Enemy::getName).toList())));
     }
 
     /**
-     * Retrieves an enemy by name from the room.
+     * Method called when the player enters a room
      *
-     * @param enemyName The name of the enemy.
-     * @return The enemy if found, null otherwise.
      */
-    public Enemy getEnemy(String enemyName) {
-        for (Enemy enemy : enemies) {
-            if (enemy.getName().equalsIgnoreCase(enemyName)) {
-                return enemy;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Removes an enemy from the room.
-     *
-     * @param enemy The enemy to remove.
-     */
-    public void removeEnemy(Enemy enemy) {
-        enemies.remove(enemy);
+    public void enter(Player player) {
+        displayInfo();
     }
 }

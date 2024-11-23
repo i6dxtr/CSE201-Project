@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -7,6 +8,7 @@ public class Game {
     private Map<String, Room> rooms;
     private boolean isGameOver;
     private Scanner scanner;
+    private Inventory inventory;
 
     public Game() {
         rooms = new HashMap<>();
@@ -53,10 +55,31 @@ public class Game {
     private void processPlayerInput() {
         System.out.print("> ");
         String input = scanner.nextLine().toLowerCase();
-        String[] words = input.split(" ", 2);
+        String[] words = input.split(" ");
+        String command;
+        String argument = "";
 
-        String command = words[0];
-        String argument = words.length > 1 ? words[1] : "";
+        if (words[0].equals("look") && words[1].equals("at")
+            || words[0].equals("pick") && words[1].equals("up")
+            || words[0].equals("interact") && words[1].equals("with")) {
+            command = words[0] + " " + words[1];
+
+            for (int i = 2; i < words.length; i++) {
+                argument += words[i];
+                if (i != words.length - 1) {
+                    argument += " ";
+                }
+            }
+        } else {
+            command = words[0];
+
+            for (int i = 1; i < words.length; i++) {
+                argument += words[i];
+                if (i != words.length - 1) {
+                    argument += " ";
+                }
+            }
+        }
 
         switch (command) {
             case "go":
@@ -81,6 +104,7 @@ public class Game {
             case "equip":
                 equipWeapon(argument);
                 break;
+            case "interact with":
             case "interact":
                 interactWith(argument);
                 break;
@@ -94,6 +118,12 @@ public class Game {
         }
     }
 
+    /**
+     * Method for the player to move to another room by a given direction
+     * (rooms are connected via north east south and west)
+     *
+     * @param direction : the direction to travel into the next room
+     */
     private void movePlayer(String direction) {
         if (direction.isEmpty()) {
             System.out.println("Move where?");
@@ -103,17 +133,23 @@ public class Game {
         if (nextRoom != null) {
             if (nextRoom.getName().equals("Throne Room")) {
                 // Check if player has the key
-                if (player.getInventory().getItem("Key") == null) {
+                if (inventory.getItem("Key") == null) {
                     System.out.println("The door is locked. You need a key to enter.");
                     return;
                 }
             }
-            player.moveTo(nextRoom);
+            player.setCurrentRoom(nextRoom);
         } else {
             System.out.println("You can't go that way!");
         }
     }
 
+    /**
+     * Method for player to look at and read the desciption of an
+     * object in the room
+     *
+     * @param target : name of the object to look at
+     */
     private void lookAt(String target) {
         if (target.isEmpty()) {
             System.out.println("Look at what?");
@@ -122,6 +158,10 @@ public class Game {
         player.getCurrentRoom().lookAt(target);
     }
 
+    /**
+     * Method for player to pick up an item
+     * @param itemName : the name of the item the player tries to pickup
+     */
     private void pickUp(String itemName) {
         if (itemName.isEmpty()) {
             System.out.println("Pick up what?");
@@ -129,7 +169,7 @@ public class Game {
         }
         Item item = player.getCurrentRoom().getItem(itemName);
         if (item != null) {
-            player.getInventory().addItem(item);
+            inventory.addItem(item);
             player.getCurrentRoom().removeItem(item);
             System.out.println("You picked up the " + item.getName() + ".");
         } else {
@@ -137,30 +177,38 @@ public class Game {
         }
     }
 
+    /**
+     * Method for player to use an item
+     * @param itemName : name of the item to use
+     */
     private void useItem(String itemName) {
         if (itemName.isEmpty()) {
             System.out.println("Use what?");
             return;
         }
-        Item item = player.getInventory().getItem(itemName);
+        Item item = inventory.getItem(itemName);
         if (item != null) {
             item.use(player);
             if (item.isConsumable()) {
-                player.getInventory().removeItem(item);
+                inventory.removeItem(item);
             }
         } else {
             System.out.println("You don't have a " + itemName + ".");
         }
     }
 
-    private void attack(String enemyName) {
+    /**
+     * Method for player to attack an enemy
+     * @param enemyName : name of the enemy to attack
+     */
+    public void attack(String enemyName) {
         if (enemyName.isEmpty()) {
             System.out.println("Attack whom?");
             return;
         }
         Enemy enemy = player.getCurrentRoom().getEnemy(enemyName);
         if (enemy != null) {
-            Combat combat = new Combat(player, enemy, scanner);
+            Combat combat = new Combat(player, enemy, scanner, inventory);
             combat.startCombat();
             if (player.isDefeated()) {
                 gameOver();
@@ -172,7 +220,7 @@ public class Game {
                     System.out.println("It dropped:");
                     for (Item item : drops) {
                         System.out.println("- " + item.getName());
-                        player.getInventory().addItem(item);
+                        inventory.addItem(item);
                     }
                 }
             }
@@ -181,6 +229,10 @@ public class Game {
         }
     }
 
+    /**
+     * Method to make the player equip a weapon
+     * @param weaponName : name of the weapon for the player to equip
+     */
     private void equipWeapon(String weaponName) {
         if (weaponName.isEmpty()) {
             System.out.println("Equip what?");
@@ -189,6 +241,12 @@ public class Game {
         player.equipWeapon(weaponName);
     }
 
+    /**
+     * method for the player to interact wiht an object
+     *
+     * @param objectName : the object which the player will
+     * interact with
+     */
     private void interactWith(String objectName) {
         if (objectName.isEmpty()) {
             System.out.println("Interact with what?");
@@ -196,13 +254,16 @@ public class Game {
         }
         Interactable interactable = player.getCurrentRoom().getInteractable(objectName);
         if (interactable != null) {
-            interactable.interact(player);
+            interactable.interact(player, this);
         } else {
             System.out.println("You can't interact with " + objectName + ".");
         }
     }
 
-    private void gameOver() {
+    /**
+     * Method to end the game when player loses
+     */
+    public void gameOver() {
         System.out.println("You have been defeated!");
         System.out.println("Game Over.");
         System.out.println("Would you like to restart? (yes/no)");
@@ -212,11 +273,17 @@ public class Game {
             isGameOver = false;
             initializeGame(player.getName());
             startGame();
-        } else {
+        } else if (input.equals("no") || input.equals("n")) {
             exitGame();
+        } else {
+            System.out.print("Not a valid input!");
+            gameOver();
         }
     }
 
+    /**
+     * method to stop the game and exit the program
+     */
     public void exitGame() {
         System.out.println("Thank you for playing!");
         isGameOver = true;

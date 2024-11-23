@@ -25,5 +25,7 @@ public class Main {
 
         game.initializeGame(name); // Initialize the game with the provided name
         game.startGame();
+
+        // sc.close();
     }
 }

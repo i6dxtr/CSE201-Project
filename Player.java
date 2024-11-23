@@ -26,35 +26,32 @@ public class Player {
         this.scanner = scanner;
     }
 
-    // Existing methods (moveTo, displayHealth, getCurrentRoom, setCurrentRoom, etc.)
 
-    public Scanner getScanner() {
-        return scanner;
-    }
-
-    public void setDefeated(boolean defeated) {
-        isDefeated = defeated;
-    }
 
     public boolean isDefeated() {
         return isDefeated;
-    }
-
-    public int getMaxHealth() {
-        return maxHealth;
-    }
-
-    public double getDamageMultiplier() {
-        return damageMultiplier;
     }
 
     public void setDamageMultiplier(double multiplier) {
         this.damageMultiplier = multiplier;
     }
 
-    public Weapon getEquippedWeapon() {
-        return equippedWeapon;
+    public void setDefending(boolean value) {
+        isDefending = value;
     }
+
+    public void displayHealth() {
+        System.out.println("Health: " + getHealth() + "/" + getMaxHealth());
+    }
+
+    public void defend() {
+        isDefending = true;
+    }
+
+    public boolean isDefending() {
+        return isDefending;
+    }
+
 
     public void equipWeapon(String weaponName) {
         Item item = inventory.getItem(weaponName);
@@ -64,10 +61,6 @@ public class Player {
         } else {
             System.out.println("You don't have a weapon named " + weaponName + ".");
         }
-    }
-
-    public void restartGame() {
-        // Logic to restart the game can be implemented in the Game class.
     }
 
     // Modify attack method to include damage multiplier
@@ -85,5 +78,62 @@ public class Player {
             isDefeated = true;
         }
         System.out.println("You take " + damage + " damage.");
+    }
+
+    public void heal(int amount) {
+        health += amount;
+        if (health > maxHealth) {
+            health = maxHealth;
+        }
+        System.out.println("you heal for " + amount + " health. You now have " + health + " health");
+    }
+
+    public void moveTo(Room room) {
+        if (currentRoom.getNextRoom().equals(room) || currentRoom.getPrevRoom().equals(room))
+            currentRoom = room;
+        else
+            System.out.println("Attempted to move outside of player bounds");
+    }
+
+
+    // Getters
+
+    public Room getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public Scanner getScanner() {
+        return scanner;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public double getDamageMultiplier() {
+        return damageMultiplier;
+    }
+
+    public Weapon getEquippedWeapon() {
+        return equippedWeapon;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+
+    // Setters
+
+    public void setDefeated(boolean defeated) {
+        isDefeated = defeated;
+    }
+
+    public void setCurrentRoom(Room room) {
+        currentRoom = room;
     }
 }
