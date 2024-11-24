@@ -56,32 +56,19 @@ public class Game {
         System.out.print("> ");
         String input = scanner.nextLine().toLowerCase();
         String[] words = input.split(" ");
-        String command;
-        String argument = "";
+        String query;
+        String argument;
 
-        if (words[0].equals("look") && words[1].equals("at")
-            || words[0].equals("pick") && words[1].equals("up")
-            || words[0].equals("interact") && words[1].equals("with")) {
-            command = words[0] + " " + words[1];
-
-            for (int i = 2; i < words.length; i++) {
-                argument += words[i];
-                if (i != words.length - 1) {
-                    argument += " ";
-                }
-            }
-        } else {
-            command = words[0];
-
-            for (int i = 1; i < words.length; i++) {
-                argument += words[i];
-                if (i != words.length - 1) {
-                    argument += " ";
-                }
-            }
+        if (words.length>2) {
+            query = words[0].concat(" ").concat(words[1]);
+            argument = words[2];
+        }
+        else {
+            query = words[0];
+            argument = words[1];
         }
 
-        switch (command) {
+        switch (query) {
             case "go":
             case "move":
                 movePlayer(argument);
@@ -90,7 +77,7 @@ public class Game {
             case "look at":
                 lookAt(argument);
                 break;
-            case "pick":
+            case "pick": 
             case "pickup":
             case "pick up":
                 pickUp(argument);
