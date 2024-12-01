@@ -8,7 +8,7 @@ public class Item {
      * @param name        Name of the item.
      * @param description Description of the item.
      */
-    public Item(String name, String description){
+    public Item(String name, String description) {
         this.name = name;
         this.description = description;
         this.isConsumable = true;
@@ -17,7 +17,7 @@ public class Item {
     /**
      * Default constructor for item.
      */
-    public Item(){
+    public Item() {
         name = "Generic item";
         description = "A perfectly generic item";
         isConsumable = true;
@@ -27,22 +27,36 @@ public class Item {
      * Method for player to use the item.
      * @param player The player that will use the item.
      */
-    public void use(Player player){
+    public void use(Player player) {
         // Empty implementation (used for child classes)
     }
 
     /**
      * Method to get item's name.
      */
-    public String getName(){
+    public String getName() {
         return name;
+    }
+
+    /**
+     * Method to set item's name.
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
      * Method to get item's description.
      */
-    public String getDescription(){
+    public String getDescription() {
         return description;
+    }
+
+    /**
+     * Method to set item's description.
+     */
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     /**
@@ -51,5 +65,12 @@ public class Item {
      */
     public boolean isConsumable() {
         return isConsumable;
+    }
+
+    /**
+     * Method to set item's consumable status.
+     */
+    public void setConsumable(boolean isConsumable) {
+        this.isConsumable = isConsumable;
     }
 }

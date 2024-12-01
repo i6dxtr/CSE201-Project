@@ -5,14 +5,12 @@ public class Combat {
     private Enemy enemy;
     private boolean isCombatOver;
     private Scanner scanner;
-    private Inventory inventory;
 
-    public Combat(Player player, Enemy enemy, Scanner scanner, Inventory inventory) {
+    public Combat(Player player, Enemy enemy, Scanner scanner) {
         this.player = player;
         this.enemy = enemy;
         this.isCombatOver = false;
         this.scanner = scanner;
-        this.inventory = inventory;
     }
 
     public void startCombat() {
@@ -33,13 +31,20 @@ public class Combat {
                 case "defend":
                     player.defend();
                     break;
-                case "item": // Does not work if inventory is null.
+                case "item":
                     useItem();
                     break;
                 case "flee":
-                    System.out.println("Fleeing from " + enemy.getName() + ".");
-                    isCombatOver = true;
-                    return;
+                    if (Math.random() < enemy.getFleeChance()) {
+                        System.out.println("You failed to flee from " + enemy.getName() + "!");
+                        // Enemy attacks immediately
+                        enemy.attack(player);
+                    } else {
+                        System.out.println("You successfully fled from " + enemy.getName() + ".");
+                        isCombatOver = true;
+                        return;
+                    }
+                    break;
                 default:
                     System.out.println("Invalid action. Please choose Attack, Defend, Item, or Flee.");
                     continue;
@@ -69,6 +74,7 @@ public class Combat {
     }
 
     private void useItem() {
+        Inventory inventory = player.getInventory();
         inventory.displayItems();
         System.out.println("Type the name of the item to use, or type 'back' to cancel.");
         System.out.print("> ");

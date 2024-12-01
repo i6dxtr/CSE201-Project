@@ -193,7 +193,8 @@ public class Game {
         }
         Enemy enemy = player.getCurrentRoom().getEnemy(enemyName);
         if (enemy != null) {
-            Combat combat = new Combat(player, enemy, scanner, player.getInventory());
+            Combat combat = new Combat(player, enemy, scanner);
+
             combat.startCombat();
             if (player.isDefeated()) {
                 gameOver();
