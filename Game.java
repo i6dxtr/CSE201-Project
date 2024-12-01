@@ -6,7 +6,6 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Game {
-
     private Player player;
     private Map<String, Room> rooms;
     private boolean isGameOver;

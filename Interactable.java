@@ -5,6 +5,8 @@ public class Interactable {
     private String name;
     private String description;
 
+    private static boolean hasChosenPotion = false;
+
     public Interactable(String name, String description) {
         this.name = name;
         this.description = description;
@@ -16,6 +18,7 @@ public class Interactable {
             case "book2" -> book2Interaction(game);
             case "sneak" -> sneakInteraction(player, game);
             case "steal weapons" -> stealWeaponsInteraction(player, game, scanner);
+            case "blue potion", "green potion", "yellow potion" -> potionInteraction(player);
         }
     }
 
@@ -110,6 +113,52 @@ public class Interactable {
         }
 
         // add orc key to player inventory after successfully killing orcs
+    }
+
+    // Class for wizard's lab, for choosing 1 out of the three potions
+    private void potionInteraction(Player player) {
+        if (hasChosenPotion) {
+            System.out.println("You have already chosen a potion. You cannot take another.");
+            return;
+        }
+
+        switch (name) {
+            case "blue potion" -> {
+                Potion bluePotion = new Potion(
+                        "Blue Potion",
+                        "A mysterious blue potion that looks ominous.",
+                        0,
+                        (int) (player.getMaxHealth() * 0.5),
+                        1.0
+                );
+                player.getInventory().addItem(bluePotion);
+                System.out.println("You pick up the Blue Potion. It looks ominous and potentially harmful.");
+            }
+            case "green potion" -> {
+                Potion greenPotion = new Potion(
+                        "Green Potion",
+                        "A vibrant green potion that radiates power.",
+                        0,
+                        0,
+                        1.0
+                );
+                player.getInventory().addItem(greenPotion);
+                player.setDamageMultiplier(1.5); // Permanently increase player's damage
+                System.out.println("You pick up the Green Potion. You feel stronger just holding it. Your attacks now deal more damage!");
+            }
+            case "yellow potion" -> {
+                Potion yellowPotion = new Potion(
+                        "Yellow Potion",
+                        "A potion that restores a significant amount of health.",
+                        (int) (player.getMaxHealth() * 0.35),
+                        0,
+                        1.0
+                );
+                player.getInventory().addItem(yellowPotion);
+                System.out.println("You pick up the Yellow Potion. It might restore your vitality.");
+            }
+        }
+        hasChosenPotion = true; // Mark as chosen
     }
 
     String getDescription(){

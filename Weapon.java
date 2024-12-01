@@ -12,7 +12,7 @@ public class Weapon extends Item {
      * @param damage      The amount of damage the weapon can deal.
      */
     public Weapon(String name, String description, int damage) {
-        super(name, description);
+        super(name, description, false);
         this.damage = damage;
     }
 
@@ -30,7 +30,7 @@ public class Weapon extends Item {
      *
      * @param player The player using the weapon.
      */
-    public void use(Player player) {
+    public void use(Player player, Enemy enemy) {
         System.out.println("You swing the " + name + " but nothing happens.");
     }
 }

@@ -1,3 +1,14 @@
+/**
+* Class: Potion
+* @author Group 3
+* @version 1.0
+* Course : CSE201 - Intro to Software Engineering
+* Written: 
+*
+* Purpose: – stores and manages data that relates 
+* to a potion. Players can use potions to affect some of their 
+* stats such as health
+*/
 public class Potion extends Item {
     private int healAmount;
     private int damageAmount;
@@ -5,8 +16,19 @@ public class Potion extends Item {
     private boolean isConsumed;
     private boolean isSuspicious;
 
+    /**
+     * constructor for Potion class
+     * @param name : the name of the potion
+     * @param description : the potions description
+     * @param healAmount : the amount that the potion will heal 
+     * the player
+     * @param damageAmount : the amount that the potion will damage
+     * the player
+     * @param chance : a percent change (double between 0 and 1) that a potion
+     * will have an effect
+     */
     public Potion(String name, String description, int healAmount, int damageAmount, double chance) {
-        super(name, description);
+        super(name, description, true);
         this.healAmount = healAmount;
         this.damageAmount = damageAmount;
         this.chance = chance;
@@ -14,10 +36,19 @@ public class Potion extends Item {
         isSuspicious = false;
     }
 
+    /**
+     * Setter method for isSuspicious
+     * @param suspicious : a boolean value
+     * 
+     */
     public void setSuspicious(boolean suspicious) {
         isSuspicious = suspicious;
     }
 
+    /**
+     * method for a player to user to use a potion
+     * @param player : a pointer to the player that will use a potion
+     */
     @Override
     public void use(Player player) {
         if (isSuspicious) {

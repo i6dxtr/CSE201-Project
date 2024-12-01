@@ -1,5 +1,17 @@
 import java.util.*;
 
+
+/**
+* Class: Potion
+* @author Group 3
+* @version 1.0
+* Course : CSE201 - Intro to Software Engineering
+* Written: 
+*
+* Purpose: – stores and manages data that relates 
+* to a Room. In the game, players will traverse through rooms
+* and interact with the items in them
+*/
 public class Room {
     private String name;
     private String description;

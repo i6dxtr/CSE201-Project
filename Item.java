@@ -8,10 +8,10 @@ public class Item {
      * @param name        Name of the item.
      * @param description Description of the item.
      */
-    public Item(String name, String description) {
+    public Item(String name, String description, boolean isConsumable) {
         this.name = name;
         this.description = description;
-        this.isConsumable = true;
+        this.isConsumable = isConsumable;
     }
 
     /**

@@ -28,18 +28,18 @@ public class RoomFactory {
      */
     public static Room createEnchantedLibrary() {
         Room library = new Room();
-        library.name = "Enchanted Library";
-        library.description = "An ancient library filled with dusty books and mysterious artifacts. "
-                + "There's a strange open book on a bookshelf in the corner that seems to be expelling an 'Evil energy'. "
-                + "On a table to the right, there's a suspicious-looking potion.";
+        library.setName("Enchanted Library");
+        library.setDescription("A room filled with magical books and artifacts. On your left, you see a large bookshelf with multiple mysterious looking books." +
+        "On the right, you see an orc sleeping in the corner.");
 
-        // Add the strange book interactable
-        library.addInteractable("strange book", new Interactable("strange book", "A strange open book that seems to emit an 'Evil energy'."));
+        library.addInteractable("book1", new Interactable("book1", "The Chronicles of the Forgotten Vale"));
+        library.addInteractable("book2", new Interactable("book2", "Book 2: A Treatise on Arcane Geometry"));
 
-        // Add the suspicious potion item
-        Potion suspiciousPotion = new Potion("Suspicious Potion", "A potion that looks both inviting and dangerous.", 0, 0, 0.5);
-        suspiciousPotion.setSuspicious(true);
-        library.addItem(suspiciousPotion);
+        Weapon club = new Weapon("Rusty Spiked Club", "A club taken from a defeated orc. Deals 5 damage.", 12);
+        Orc grug = new Orc("Grug", "A hunched, brutish orc with a rusty spiked club.", 25, 5);
+        grug.addDrop(club);
+        grug.setIntendedAction("Grug is grunting and preparing to swing his rusty club at you.");
+        library.addEnemy(grug);
 
         return library;
     }
@@ -51,16 +51,16 @@ public class RoomFactory {
      */
     public static Room createOrcBarracks() {
         Room barracks = new Room();
-        barracks.name = "Orc Barracks";
-        barracks.description = "A rough room where orcs rest and plan their raids. In the corner, some orcs are facing away, standing around their weapons.";
+        barracks.setName("Orc Barracks");
+        barracks.setDescription("A rough room where orcs rest and plan their raids. In the corner, some orcs are facing away, standing around their weapons.");
 
         // Add interactables
         barracks.addInteractable("sneak", new Interactable("sneak", "You can attempt to sneak around the orcs and pickpocket a key."));
         barracks.addInteractable("steal weapons", new Interactable("steal weapons", "You can choose a weapon to steal to fight the orcs."));
-        barracks.addInteractable("attack orcs", new Interactable("attack orcs", "You can choose to attack the orcs head-on."));
+        // barracks.addInteractable("attack orcs", new Interactable("attack orcs", "You can choose to attack the orcs head-on."));
 
         // Add Orc Key as an item (for pickpocketing)
-        Item orcKey = new Item("Orc Key", "A key that might unlock the next room.");
+        Item orcKey = new Item("Orc Key", "A key that might unlock the next room.", false);
         barracks.addItem(orcKey);
 
         // Add orcs as enemies
@@ -85,9 +85,9 @@ public class RoomFactory {
      */
     public static Room createWizardsLaboratory() {
         Room laboratory = new Room();
-        laboratory.name = "Wizard's Laboratory";
-        laboratory.description = "An eerie lab filled with bubbling potions and strange devices. "
-                + "On the wizard's desk, there are two potions: one blue and one green.";
+        laboratory.setName("Wizard's Laboratory");
+        laboratory.setDescription("An eerie lab filled with bubbling potions and strange devices. "
+                + "On the wizard's desk, there are two potions: one blue and one green.");
 
         // Add interactables for potions
         laboratory.addInteractable("blue potion", new Interactable("blue potion", "A blue potion on the desk."));
@@ -104,9 +104,9 @@ public class RoomFactory {
      */
     public static Room createThroneRoom() {
         Room throneRoom = new Room();
-        throneRoom.name = "Throne Room";
-        throneRoom.description = "An opulent room where the ruler holds court. "
-                + "There's a cursed sword and a scary-looking potion on a pedestal.";
+        throneRoom.setName("Throne Room");
+        throneRoom.setDescription("An opulent room where the ruler holds court. "
+                + "There's a cursed sword and a scary-looking potion on a pedestal.");
 
         // Add interactables for items
         throneRoom.addInteractable("cursed sword", new Interactable("cursed sword", "A sword that looks powerful but feels ominous."));
@@ -123,14 +123,14 @@ public class RoomFactory {
      * Connects the rooms in sequence.
      */
     public static void connectRooms(Room r1, Room r2, Room r3, Room r4) {
-        r1.prevRoom = null;
-        r1.nextRoom = r2;
-        r2.prevRoom = r1;
-        r2.nextRoom = r3;
-        r3.prevRoom = r2;
-        r3.nextRoom = r4;
-        r4.prevRoom = r3;
-        r4.nextRoom = null;
+        r1.setPrevRoom(null);
+        r1.setNextRoom(r2);
+        r2.setPrevRoom(r1);
+        r2.setNextRoom(r3);
+        r3.setPrevRoom(r2);
+        r3.setNextRoom(r4);
+        r4.setPrevRoom(r3);
+        r4.setNextRoom(null);
 
         r1.addExit("north", r2);
         r2.addExit("north", r3);

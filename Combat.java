@@ -86,10 +86,17 @@ public class Combat {
 
         Item item = inventory.getItem(input);
         if (item != null) {
-            item.use(player);
-            if (item.isConsumable()) {
+            if (item instanceof Weapon) {
+                player.equipWeapon(item.getName());
+                player.attack(enemy);
+            } else if (item instanceof Potion) {
+                item.use(player);
                 inventory.removeItem(item);
             }
+            // item.use(player);
+            // if (item.isConsumable()) {
+            //     inventory.removeItem(item);
+            // }
         } else {
             System.out.println("You don't have that item.");
         }
