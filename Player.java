@@ -26,6 +26,9 @@ public class Player {
         this.scanner = scanner;
     }
 
+    public Inventory getInventory() {
+        return inventory;
+    }
 
 
     public boolean isDefeated() {

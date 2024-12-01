@@ -32,6 +32,16 @@ public class Inventory {
         return null;
     }
 
+    public boolean containsItem(String itemName) {
+        for (Item item : items) {
+            if (item.getName().equalsIgnoreCase(itemName)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * Displays the items in the inventory.
      */

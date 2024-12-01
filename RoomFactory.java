@@ -52,7 +52,8 @@ public class RoomFactory {
         Room barracks = new Room();
         barracks.setName("Orc Barracks");
         barracks.setDescription("A rough room where orcs rest and plan their raids. In the middle of the room, multiple orcs rest, around a fire.");
-        barracks.addInteractable("sneak", new Interactable("Sneak", "Sneaking past the orcs to the treasure"));
+        barracks.addInteractable("sneak", new Interactable("sneak", "Sneaking past the orcs to the treasure"));
+        barracks.addInteractable("steal weapons", new Interactable("steal weapons", "Stealing weapons and fighting the orcs for the key"));
         barracks.addItem(new Item("Orc Key", "A key that might unlock some treasure."));
         barracks.addEnemy(new Orc("Grunk", "Orc Fighter", 60, 12));
         barracks.addEnemy(new Orc("Zogzug", "Orc Warrior", 50, 10));
@@ -105,5 +106,13 @@ public class RoomFactory {
         r3.setNextRoom(r4);
         r4.setPrevRoom(r3);
         r4.setNextRoom(null);
+
+        r1.addExit("north", r2);
+        r2.addExit("north", r3);
+        r3.addExit("north", r4);
+
+        r2.addExit("south", r1);
+        r3.addExit("south", r2);
+        r4.addExit("south", r3);
     }
 }

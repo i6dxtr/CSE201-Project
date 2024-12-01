@@ -1,14 +1,16 @@
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Game {
+
     private Player player;
     private Map<String, Room> rooms;
     private boolean isGameOver;
     private Scanner scanner;
-    private Inventory inventory;
 
     public Game() {
         rooms = new HashMap<>();
@@ -56,58 +58,47 @@ public class Game {
         System.out.print("> ");
         String input = scanner.nextLine().toLowerCase();
         String[] words = input.split(" ");
-        String query;
-        String argument;
+        String command;
+        String argument = "";
 
-        if (words.length>2) {
-            query = words[0].concat(" ").concat(words[1]);
-            argument = words[2];
-        }
-        else {
-            query = words[0];
-            argument = words[1];
+        if (words[0].equals("look") && words[1].equals("at")
+            || words[0].equals("pick") && words[1].equals("up")
+            || words[0].equals("interact") && words[1].equals("with")) {
+            command = words[0] + " " + words[1];
+
+            for (int i = 2; i < words.length; i++) {
+                argument += words[i];
+                if (i != words.length - 1) {
+                    argument += " ";
+                }
+            }
+        } else {
+            command = words[0];
+
+            for (int i = 1; i < words.length; i++) {
+                argument += words[i];
+                if (i != words.length - 1) {
+                    argument += " ";
+                }
+            }
         }
 
-        switch (query) {
-            case "go":
-            case "move":
-                movePlayer(argument);
-                break;
-            case "look":
-            case "look at":
-                lookAt(argument);
-                break;
-            case "pick": 
-            case "pickup":
-            case "pick up":
-                pickUp(argument);
-                break;
-            case "use":
-                useItem(argument);
-                break;
-            case "attack":
-                attack(argument);
-                break;
-            case "equip":
-                equipWeapon(argument);
-                break;
-            case "interact with":
-            case "interact":
-                interactWith(argument);
-                break;
-            case "quit":
-            case "exit":
-                exitGame();
-                break;
-            default:
-                System.out.println("I don't understand that command.");
-                break;
+        switch (command) {
+            case "go", "move" -> movePlayer(argument);
+            case "look", "look at" -> lookAt(argument);
+            case "pick", "pickup", "pick up" -> pickUp(argument);
+            case "use" -> useItem(argument);
+            case "attack" -> attack(argument);
+            case "equip" -> equipWeapon(argument);
+            case "interact with", "interact" -> interactWith(argument);
+            case "quit", "exit" -> exitGame();
+            default -> System.out.println("I don't understand that command.");
         }
     }
 
     /**
-     * Method for the player to move to another room by a given direction
-     * (rooms are connected via north east south and west)
+     * Method for the player to move to another room by a given direction (rooms
+     * are connected via north east south and west)
      *
      * @param direction : the direction to travel into the next room
      */
@@ -120,11 +111,12 @@ public class Game {
         if (nextRoom != null) {
             if (nextRoom.getName().equals("Throne Room")) {
                 // Check if player has the key
-                if (inventory.getItem("Key") == null) {
+                if (player.getInventory().getItem("Orc Key") == null) {
                     System.out.println("The door is locked. You need a key to enter.");
                     return;
                 }
             }
+
             player.setCurrentRoom(nextRoom);
         } else {
             System.out.println("You can't go that way!");
@@ -132,8 +124,8 @@ public class Game {
     }
 
     /**
-     * Method for player to look at and read the desciption of an
-     * object in the room
+     * Method for player to look at and read the desciption of an object in the
+     * room
      *
      * @param target : name of the object to look at
      */
@@ -147,6 +139,7 @@ public class Game {
 
     /**
      * Method for player to pick up an item
+     *
      * @param itemName : the name of the item the player tries to pickup
      */
     private void pickUp(String itemName) {
@@ -156,7 +149,10 @@ public class Game {
         }
         Item item = player.getCurrentRoom().getItem(itemName);
         if (item != null) {
-            inventory.addItem(item);
+            switch (item.getName()) {
+                case "Orc Key" -> orcKeyPickup();
+            }
+            player.getInventory().addItem(item);
             player.getCurrentRoom().removeItem(item);
             System.out.println("You picked up the " + item.getName() + ".");
         } else {
@@ -166,6 +162,7 @@ public class Game {
 
     /**
      * Method for player to use an item
+     *
      * @param itemName : name of the item to use
      */
     private void useItem(String itemName) {
@@ -173,11 +170,11 @@ public class Game {
             System.out.println("Use what?");
             return;
         }
-        Item item = inventory.getItem(itemName);
+        Item item = player.getInventory().getItem(itemName);
         if (item != null) {
             item.use(player);
             if (item.isConsumable()) {
-                inventory.removeItem(item);
+                player.getInventory().removeItem(item);
             }
         } else {
             System.out.println("You don't have a " + itemName + ".");
@@ -186,6 +183,7 @@ public class Game {
 
     /**
      * Method for player to attack an enemy
+     *
      * @param enemyName : name of the enemy to attack
      */
     public void attack(String enemyName) {
@@ -195,7 +193,7 @@ public class Game {
         }
         Enemy enemy = player.getCurrentRoom().getEnemy(enemyName);
         if (enemy != null) {
-            Combat combat = new Combat(player, enemy, scanner, inventory);
+            Combat combat = new Combat(player, enemy, scanner, player.getInventory());
             combat.startCombat();
             if (player.isDefeated()) {
                 gameOver();
@@ -207,7 +205,7 @@ public class Game {
                     System.out.println("It dropped:");
                     for (Item item : drops) {
                         System.out.println("- " + item.getName());
-                        inventory.addItem(item);
+                        player.getInventory().addItem(item);
                     }
                 }
             }
@@ -218,6 +216,7 @@ public class Game {
 
     /**
      * Method to make the player equip a weapon
+     *
      * @param weaponName : name of the weapon for the player to equip
      */
     private void equipWeapon(String weaponName) {
@@ -231,8 +230,7 @@ public class Game {
     /**
      * method for the player to interact wiht an object
      *
-     * @param objectName : the object which the player will
-     * interact with
+     * @param objectName : the object which the player will interact with
      */
     private void interactWith(String objectName) {
         if (objectName.isEmpty()) {
@@ -241,7 +239,7 @@ public class Game {
         }
         Interactable interactable = player.getCurrentRoom().getInteractable(objectName);
         if (interactable != null) {
-            interactable.interact(player, this);
+            interactable.interact(player, this, scanner);
         } else {
             System.out.println("You can't interact with " + objectName + ".");
         }
@@ -275,5 +273,18 @@ public class Game {
         System.out.println("Thank you for playing!");
         isGameOver = true;
         System.exit(0);
+    }
+
+    private void orcKeyPickup() {
+        Random rand = new Random();
+        boolean playerDead = rand.nextBoolean();
+
+        if (playerDead) {
+            System.out.println("\n--------------------------------------------------------------------------------------"
+                            + "\nYou pick up the Orc Key straight from Grunk's pocket. Unfortunately you weren't fast"
+                            + "\nenough, and you don't have any good weapons on you. Better luck next time..."
+                            + "\n--------------------------------------------------------------------------------------\n");
+            gameOver();
+        }
     }
 }

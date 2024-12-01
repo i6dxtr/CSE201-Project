@@ -21,8 +21,16 @@ public class Requirement {
      * @param player The specified player to check requirement status.
      * @return A boolean value indicating true if the requirement has been met or false otherwise.
      */
-    public boolean check(Player player) {
+    public boolean check() {
         // simplified for now
         return isMet;
+    }
+
+    public void setRequirementStatus(boolean status) {
+        isMet = status;
+    }
+
+    public String getRequirementDescription() {
+        return this.description;
     }
 }
