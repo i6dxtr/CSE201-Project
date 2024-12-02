@@ -68,7 +68,8 @@ public class RoomFactory {
         Orc zogzug = new Orc("Zogzug", "An orc warrior with a fierce demeanor.", 50, 10);
 
         // Add weapon drop to Grunk
-        Weapon powerfulWeapon = new Weapon("Orcish Greatsword", "A heavy sword that deals significant damage.", 13); // 30% stronger than starting weapon
+        // Weapon powerfulWeapon = new Weapon("Orcish Greatsword", "A heavy sword that deals significant damage.", 13); // 30% stronger than starting weapon
+        Weapon powerfulWeapon = new Weapon("Orcish Greatsword", "A heavy sword that deals significant damage.", 20); // changed to 20 since boss fight was impossible
         grunk.addDrop(powerfulWeapon);
         grunk.addDrop(orcKey); // Grunk has the key as a drop
 

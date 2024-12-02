@@ -19,7 +19,19 @@ public class Interactable {
             case "sneak" -> sneakInteraction(player, game);
             case "steal weapons" -> stealWeaponsInteraction(player, game, scanner);
             case "blue potion", "green potion", "yellow potion" -> potionInteraction(player);
+            case "cursed sword" -> cursedSwordInteraction(player);
+            case "scary potion" -> scaryPotionInteraction(player);
         }
+    }
+
+    private void scaryPotionInteraction(Player player) {
+        System.out.println("You drink the scary potion and feel immense power coursing through you!");
+        player.setDamageMultiplier(2.0);
+    }
+
+    private void cursedSwordInteraction(Player player) {
+        System.out.println("You attempt to use the cursed sword, and feel a sudden wave of dread. You lose 10 health.");
+        player.takeDamage(10);
     }
 
     private void book1Interaction(Game game) {
@@ -108,7 +120,7 @@ public class Interactable {
         while (player.getCurrentRoom().getEnemy("Grunk") != null) {
             game.attack("Grunk");
         }
-        while(player.getCurrentRoom().getEnemy("Zozug") != null) {
+        while (player.getCurrentRoom().getEnemy("Zozug") != null) {
             game.attack("Zozug");
         }
 

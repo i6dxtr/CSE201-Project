@@ -40,6 +40,7 @@ public class Game {
 
     public void startGame() {
         System.out.println("Welcome to the Adventure Game!");
+        // maybe add instructions here for what to do w/interactables, items, enemies, etc.
         player.displayHealth();
         while (!isGameOver) {
             Room currentRoom = player.getCurrentRoom();
