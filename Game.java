@@ -1,4 +1,16 @@
-
+/**
+ * Class: Game
+ *
+ * @authors Demetrius Hullum Scott, Finn Smart, Tom England, Joshua Rosenblatt
+ * @version 1.0
+ * Course: CSE 201 Fall 2024
+ * Date: 12/2/24
+ *
+ * Purpose: This class represents the main game logic. It manages the player,
+ * rooms, and overall game state, handling player interactions, commands, and
+ * the progression of the game. The class also initializes the game world and
+ * defines the mechanics for navigating and interacting within it.
+ */
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
