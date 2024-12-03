@@ -3,7 +3,7 @@
 * @author Group 3
 * @version 1.0
 * Course : CSE201 - Intro to Software Engineering
-* Written: 
+* Written: 11/20/24
 *
 * Purpose: – stores and manages data that relates 
 * to a potion. Players can use potions to affect some of their 
@@ -17,7 +17,7 @@ public class Potion extends Item {
     private boolean isSuspicious;
 
     /**
-     * constructor for Potion class
+     * Constructor for Potion class
      * @param name : the name of the potion
      * @param description : the potions description
      * @param healAmount : the amount that the potion will heal 
@@ -38,8 +38,8 @@ public class Potion extends Item {
 
     /**
      * Setter method for isSuspicious
-     * @param suspicious : a boolean value
      * 
+     * @param suspicious : a boolean value
      */
     public void setSuspicious(boolean suspicious) {
         isSuspicious = suspicious;
@@ -51,6 +51,8 @@ public class Potion extends Item {
      */
     @Override
     public void use(Player player) {
+        // Suspicious potions have a chance to heal or hurt the player instead of
+        // a chance to have no effect
         if (isSuspicious) {
             System.out.println("You drink the suspicious potion...");
             if (Math.random() < 0.5) {
@@ -66,7 +68,13 @@ public class Potion extends Item {
             return;
         }
 
-        // Original potion behavior
+        /* Original potion behavior:
+        * There is a chance that the potion will have no effect
+        * if it has an effect it will heal and damage the player by
+        * a specified ammount (typically heal xor hurt will be 0 so that the player is only
+        * healed or hurt)
+        * (consumed potions cannot be used)
+        */ 
         if (!isConsumed) {
             if (Math.random() <= chance) {
                 if (healAmount > 0) {

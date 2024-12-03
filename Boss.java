@@ -1,7 +1,8 @@
 /**
  * Class: Boss
  *
- * @author Joshua Rosenblatt
+ * @authors: Josh Rosenblatt, Finn Smart, Brandon Duecaster, Dylan Stoia,
+ *          Demetrius Hullum Scott, Thomas England
  * @version 1.0
  * Course: CSE 201 Fall 2024
  * Date: 11/20/24

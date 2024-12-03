@@ -32,9 +32,11 @@ public class RoomFactory {
         library.setDescription("A room filled with magical books and artifacts. On your left, you see a large bookshelf with multiple mysterious looking books." +
         " On the right, you see an orc sleeping in the corner.");
 
+        // library has 2 books as interactables
         library.addInteractable("book1", new Interactable("book1", "The Chronicles of the Forgotten Vale"));
         library.addInteractable("book2", new Interactable("book2", "Book 2: A Treatise on Arcane Geometry"));
 
+        // library has one enemy with a weapon that deals 12 damage
         Weapon club = new Weapon("Rusty Spiked Club", "A club taken from a defeated orc. Deals 5 damage.", 12);
         Orc grug = new Orc("Grug", "A hunched, brutish orc with a rusty spiked club.", 25, 5);
         grug.addDrop(club);
@@ -57,7 +59,6 @@ public class RoomFactory {
         // Add interactables
         barracks.addInteractable("sneak", new Interactable("sneak", "You can attempt to sneak around the orcs and pickpocket a key."));
         barracks.addInteractable("steal weapons", new Interactable("steal weapons", "You can choose a weapon to steal to fight the orcs."));
-        // barracks.addInteractable("attack orcs", new Interactable("attack orcs", "You can choose to attack the orcs head-on."));
 
         // Add Orc Key as an item (for pickpocketing)
         Item orcKey = new Item("Orc Key", "A key that might unlock the next room.", false);
@@ -68,8 +69,7 @@ public class RoomFactory {
         Orc zogzug = new Orc("Zogzug", "An orc warrior with a fierce demeanor.", 50, 10);
 
         // Add weapon drop to Grunk
-        // Weapon powerfulWeapon = new Weapon("Orcish Greatsword", "A heavy sword that deals significant damage.", 13); // 30% stronger than starting weapon
-        Weapon powerfulWeapon = new Weapon("Orcish Greatsword", "A heavy sword that deals significant damage.", 20); // changed to 20 since boss fight was impossible
+        Weapon powerfulWeapon = new Weapon("Orcish Greatsword", "A heavy sword that deals significant damage.", 20);
         grunk.addDrop(powerfulWeapon);
         grunk.addDrop(orcKey); // Grunk has the key as a drop
 
@@ -132,7 +132,7 @@ public class RoomFactory {
         r3.setNextRoom(r4);
         r4.setPrevRoom(r3);
         r4.setNextRoom(null);
-
+        // Links each room to another with a command, eg. "go north"
         r1.addExit("north", r2);
         r2.addExit("north", r3);
         r3.addExit("north", r4);

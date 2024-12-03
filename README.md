@@ -1,71 +1,48 @@
-# Text Adventure Game
+# Adventure Game - Orcs and Wizards
 
-A Java-based text adventure game where players navigate through uniquely themed rooms, engage in combat, manage inventory, and make crucial decisions that affect their journey.
-
-## Overview
-
-The game allows players to explore a series of four themed rooms:
-- Enchanted Library
-- Orc Barracks
-- Wizard's Laboratory
-- Throne Room
-
-## Features
-
-- **Health System**:
-- **Inventory Management**:
-- **Combat System**:
-- **Item System**:
-
-## Getting Started
-
-### Prerequisites
-- Java Development Kit (JDK)
-- Java Runtime Environment (JRE)
-
-## How to Play
+## Introduction
+Welcome to the Adventure Game! In this text-based adventure, you'll explore mysterious rooms
+filled with dangers and treasures.
+Navigate through the game by typing commands to interact with your environment and progress your journey.
+Here are some basic commands to get you started:
 
 ### Basic Commands
-- `look at [object/area]` - Examine something in detail
-- `look at room` - Get room description
-- `move to [location]` - Move to a new area
-- `pick up [item]` - Add item to inventory
-- `use [item]` - Use or equip an item
-- `attack [enemy]` - Initiate combat
 
-### Combat Commands
-- `attack` - Deal damage to enemy
-- `defend` - Block the next enemy attack
-- `item` - Access inventory during combat
-- `flee` - Attempt to escape
+**Movement**: Move to adjacent rooms using directions (e.g., go north, go east).
 
-### Game Flow
-1. Start in the Enchanted Library with basic equipment
-2. Navigate through rooms solving puzzles and defeating enemies
-3. Each room requires specific objectives to be completed before proceeding
-4. Final confrontation occurs in the Throne Room
-5. Victory or defeat screen with option to replay
+**Look Around**: Get a description of your current surroundings with look around.
 
-## Room Overview
+**Inspect Items**: Examine items in the room using look at [item] (e.g., look at sword).
 
-### Enchanted Library
+**Pick Up Items**: Add items to your inventory with pick up [item] (e.g., pick up potion).
 
-### Orc Barracks
+**Use Items**: Utilize items from your inventory using use [item] (e.g., use health potion).
 
-### Wizard's Laboratory
+**Equip Weapons**: Equip a weapon by typing equip [weapon] (e.g., equip sword).
 
-### Throne Room
+**Attack Enemies**: Engage in combat with attack [enemy] (e.g., attack orc).
 
-## Contributors
-- Dylan Stoia
-- Brandon Duecaster
-- Demetrius Hullum Scott
-- Finn Smart
-- Josh Rosenblatt
-- Thomas England
 
-## Project Status
-Iteration 1 Complete - Core gameplay mechanics largely implemented, including room navigation and inventory management.
+**Interact with Objects**: Interact with objects in the room using interact with [object] (e.g., interact with chest).
 
-## Makefile instructions for submission
-Program can be run from the directory containing all source files using an IDE or the makefile (Use 'make' target to compile, 'make run' to run the program, and 'make clean' to remove all executable files).
+**Check Inventory**: View your carried items with inventory.
+
+**Quit Game**: Exit the game at any time with quit.
+
+### Ending Notes
+
+Pay attention to the descriptions and feedback provided as you play—they contain valuable clues
+and information to help you succeed. Manage your health wisely, equip the right weapons,
+and make strategic decisions to overcome the challenges ahead. Good luck on your adventure!
+
+### Group Participation
+
+Josh Rosenblatt: 16.6%
+Finn Smart: 16.6%
+Brandon Duecaster: 16.6%
+Dylan Stoia: 16.6%
+Demetrius Hullum Scott: 16.6%
+Thomas England: 16.6%
+
+### Main method location
+Main.java

@@ -6,9 +6,9 @@ import java.util.*;
 * @author Group 3
 * @version 1.0
 * Course : CSE201 - Intro to Software Engineering
-* Written: 
+* Written: 12/2/24
 *
-* Purpose: – stores and manages data that relates 
+* Purpose: – stores and manages data that relates
 * to a Room. In the game, players will traverse through rooms
 * and interact with the items in them
 */
@@ -22,6 +22,9 @@ public class Room {
     private Room nextRoom;
     private Room prevRoom;
 
+    /**
+     * Constructs a Room object with no exits, items, interactables, or enemies.
+     */
     public Room() {
         exits = new HashMap<>();
         items = new ArrayList<>();
@@ -294,7 +297,6 @@ public class Room {
 
     /**
      * Method called when the player enters a room
-     *
      */
     public void enter(Player player) {
         displayInfo();

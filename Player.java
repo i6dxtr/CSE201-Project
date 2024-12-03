@@ -3,12 +3,12 @@ import java.util.Scanner;
 
 /**
 * Class: Player
-* @author Group 3
+* @authors: Brandon Ducaster, Tom England, Joshua Rosenblatt, Dylan Stoia, Demetrius Hullum Scott
 * @version 1.0
 * Course : CSE201 - Intro to Software Engineering
-* Written: 
+* Written: 11/22/24
 *
-* Purpose: – stores and manages data that relates 
+* Purpose: – stores and manages data that relates
 to the games player character
 */
 public class Player {
@@ -23,6 +23,12 @@ public class Player {
     private double damageMultiplier;
     private Scanner scanner;
 
+    /**
+     * Constructs a player object with a specified name, 100 health, a basic sword and a health potion.
+     *
+     * @param name A string containing the specified player name
+     * @param scanner A Scanner object for retrieving user input
+     */
     public Player(String name, Scanner scanner) {
         this.name = name;
         this.maxHealth = 100;

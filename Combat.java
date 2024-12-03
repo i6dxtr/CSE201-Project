@@ -1,10 +1,11 @@
 /**
  * Class: Combat
  *
- * @authors Tom England, Joshua Rosenblatt, Finn Smart
+ * @authors: Josh Rosenblatt, Finn Smart, Brandon Duecaster, Dylan Stoia,
+ *          Demetrius Hullum Scott, Thomas England
  * @version 1.0
  * Course: CSE 201 Fall 2024
- * Date: 12/2/24
+ * Date: 11/20/24
  *
  * Purpose: This class handles the combat system between a Player and an Enemy.
  * It manages the flow of combat, allowing the Player to choose actions such as
@@ -31,6 +32,7 @@ public class Combat {
         this.enemy = enemy;
         this.isCombatOver = false;
         this.scanner = scanner;
+        // Constructor for player with attributes
     }
 
     /**
@@ -40,6 +42,7 @@ public class Combat {
      */
     public void startCombat() {
         System.out.println("Combat initiated with " + enemy.getName() + "!");
+        // Displaying the enemy's health and player's health
         player.displayHealth();
         enemy.displayHealth();
 
@@ -49,6 +52,7 @@ public class Combat {
             System.out.print("> ");
             String input = scanner.nextLine().toLowerCase();
 
+            // Taking an input for an attack with an enemy
             switch (input) {
                 case "attack":
                     player.attack(enemy);
@@ -60,6 +64,7 @@ public class Combat {
                     useItem();
                     break;
                 case "flee":
+                    // Display flee
                     if (Math.random() < enemy.getFleeChance()) {
                         System.out.println("You failed to flee from " + enemy.getName() + "!");
                         enemy.attack(player);
@@ -73,7 +78,7 @@ public class Combat {
                     System.out.println("Invalid action. Please choose Attack, Defend, Item, or Flee.");
                     continue;
             }
-
+            // end combat, enemy loses
             if (enemy.isDefeated()) {
                 System.out.println("You have defeated " + enemy.getName() + "!");
                 isCombatOver = true;
@@ -101,6 +106,7 @@ public class Combat {
      */
     private void useItem() {
         Inventory inventory = player.getInventory();
+        // Displaying inventory and if the player wants to use an item
         inventory.displayItems();
         System.out.println("Type the name of the item to use, or type 'back' to cancel.");
         System.out.print("> ");
@@ -110,12 +116,15 @@ public class Combat {
             return;
         }
 
+        // Using the item in combat or a potion
         Item item = inventory.getItem(input);
         if (item != null) {
             if (item instanceof Weapon) {
+                // If the item is a weapon, equip weapon
                 player.equipWeapon(item.getName());
                 player.attack(enemy);
             } else if (item instanceof Potion) {
+                // If the item is a potion, use the potion
                 item.use(player);
                 inventory.removeItem(item);
             }

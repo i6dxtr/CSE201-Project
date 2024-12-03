@@ -1,3 +1,20 @@
+/**
+ * Class: Trap
+ *
+ * @authors
+ * Dylan Stoia
+ * Brandon Duecaster
+ * Demetrius Hullum Scott
+ * Finn Smart
+ * Josh Rosenblatt
+ * Thomas England
+
+ * @version 1.0
+ * Course: CSE 201 Fall 2024
+ * Written: 11/28/24
+ *
+ * Purpose: This class stores information for a trap to be used inside a room
+ */
 public class Trap {
     private String name; // name of trap
     private String description; // description of trap
@@ -6,6 +23,7 @@ public class Trap {
 
     /**
      * Trap Constructor.
+     *
      * @param name name of the trap
      * @param description the trap's description
      * @param damage the amount of damage the trap does to the user

@@ -1,10 +1,11 @@
 /**
  * Class: Enemy
  *
- * @authors Finn Smart, Brandon Ducaster
+ * @authors: Josh Rosenblatt, Finn Smart, Brandon Duecaster, Dylan Stoia,
+ *          Demetrius Hullum Scott, Thomas England
  * @version 1.0
  * Course: CSE 201 Fall 2024
- * Date: 11/27/24
+ * Date: 11/22/24
  *
  * Purpose: This abstract class represents an Enemy in the game. It defines the
  * core attributes and behaviors common to all enemies, such as health, attack
@@ -12,8 +13,8 @@
  * this class and provide additional or overridden functionality as needed.
  */
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Enemy {
     protected String name; // Enemy's name

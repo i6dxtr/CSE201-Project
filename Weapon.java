@@ -1,3 +1,14 @@
+/**
+ * Class: Weapon
+ *
+ * @authors Demetrius Hullum Scott, Finn Smart, Tom England, Joshua Rosenblatt, Brandon Duecaster
+ * @version 1.0
+ * Course: CSE 201 Fall 2024
+ * Date: 11/25/24
+ *
+ * Purpose: This class contains the information for weapons that the player
+ * will use to deal damage to the enemies.
+ */
 public class Weapon extends Item {
 
     // Initializing damage variable
