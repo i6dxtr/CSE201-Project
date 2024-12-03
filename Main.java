@@ -19,7 +19,7 @@ public class Main {
 
         // Introduction
         System.out.println("You are about to embark on a perilous journey through mysterious rooms filled with dangers and treasures.");
-        System.out.println("Please input your name:");
+        System.out.print("Please input your name: ");
 
         String name = sc.nextLine();
 

@@ -30,7 +30,7 @@ public class RoomFactory {
         Room library = new Room();
         library.setName("Enchanted Library");
         library.setDescription("A room filled with magical books and artifacts. On your left, you see a large bookshelf with multiple mysterious looking books." +
-        "On the right, you see an orc sleeping in the corner.");
+        " On the right, you see an orc sleeping in the corner.");
 
         library.addInteractable("book1", new Interactable("book1", "The Chronicles of the Forgotten Vale"));
         library.addInteractable("book2", new Interactable("book2", "Book 2: A Treatise on Arcane Geometry"));
